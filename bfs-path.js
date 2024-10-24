@@ -1,18 +1,53 @@
 function findNeighbors(node, matrix) {
-    // Up
+    let neighbors = []
+    let x = node[0]
+    let y = node[1]
 
-    // Down
+    // UP: 
+    if(x != 0) neighbors.push([x - 1,y])
 
-    // Left
+    // DOWN: 
+    if(x != matrix.length - 1) neighbors.push([x + 1,y])
+    // LEFT: 
+    if(y != 0) neighbors.push([x,y - 1])
+    // RIGHT: 
+    if(y != matrix[0].length - 1) neighbors.push([x,y + 1])
 
-    // Right
 
-    // Your code here
+    // Return the neighbors array
+    return neighbors
 }
 
 
+
 function bfsPath(matrix, startNode, endValue) {
-    // Your code here
+    
+    const queue = [startNode]
+    const visited = new Set()
+    const visitedArray = []
+    let found = false
+    if(matrix[startNode[0]][startNode[1]] === endValue) return [startNode]
+    while(queue.length > 0){
+        let current = queue.pop()
+        if(!visited.has(_toString(current))){
+            visited.add(_toString(current))
+            visitedArray.push(current)
+            if(matrix[current[0]][current[1]] === endValue) found = true
+
+            let neighbors = findNeighbors(current, matrix)
+            for(const neighbor of neighbors){
+                queue.push(neighbor)
+            }
+        }
+    }
+
+    if(found === false) return false
+    return visitedArray
+    
+}
+
+function _toString(coord){
+    return `${coord[0]},${coord[1]}`
 }
 
 
